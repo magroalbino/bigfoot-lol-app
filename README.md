@@ -15,6 +15,7 @@ bigfoot-lol-app é um aplicativo móvel para Android e iOS, desenvolvido em Type
 💸 Contribua!: Apoie o time por meio de doações via PIX ou cartão de crédito diretamente pelo app.
 
 🛠 Tecnologias Utilizadas
+
 React Native: Framework para desenvolvimento de aplicativos móveis multiplataforma.
 TypeScript: Superset do JavaScript que adiciona tipagem estática, aumentando a robustez do código.
 Expo Go: Plataforma que facilita o desenvolvimento, compilação e distribuição de apps em React Native.
