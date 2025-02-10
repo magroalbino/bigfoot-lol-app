@@ -1,17 +1,18 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../types'; // Ajuste o caminho da importação conforme necessário
 
 const players = [
-  { id: '1', name: 'Auditorovisk', realName: 'Fábio Silva', age: 22, favoriteChampion: 'Lee Sin' },
-  { id: '2', name: 'GALO VIGARISTA', realName: 'Lucas Oliveira', age: 24, favoriteChampion: 'Zed' },
-  { id: '3', name: 'RicaForex', realName: 'Mariana Costa', age: 21, favoriteChampion: 'Ahri' },
-  { id: '4', name: 'Smolder', realName: 'Ricardo Souza', age: 25, favoriteChampion: 'Malphite' },
-  { id: '5', name: 'iquinho', realName: 'Ana Beatriz', age: 23, favoriteChampion: 'Ashe' },
+  { id: '1', name: 'Auditorovisk', position: 'Top' },
+  { id: '2', name: 'GALO VIGARISTA', position: 'Jungle' },
+  { id: '3', name: 'RicaForex', position: 'Mid' },
+  { id: '4', name: 'Smolder', position: 'Adcarry' },
+  { id: '5', name: 'iquinho', position: 'Support' },
 ];
 
-export default function LineupScreen() {
-  const navigation = useNavigation();
+const LineupScreen = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -19,12 +20,13 @@ export default function LineupScreen() {
       onPress={() => navigation.navigate('PlayerDetails', { player: item })}
     >
       <Text style={styles.playerName}>{item.name}</Text>
+      <Text style={styles.playerPosition}>{item.position}</Text>
     </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Line-up do BIGFOOT eSports</Text>
+      <Text style={styles.header}>Line-up do BIGFOOT Esports 2025</Text>
       <FlatList
         data={players}
         renderItem={renderItem}
@@ -32,7 +34,7 @@ export default function LineupScreen() {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -43,7 +45,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#ADD8E6',
+    color: '#000', // Cor preta para o título
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -56,6 +58,13 @@ const styles = StyleSheet.create({
   },
   playerName: {
     fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  playerPosition: {
+    fontSize: 16,
     color: '#000',
   },
 });
+
+export default LineupScreen;
