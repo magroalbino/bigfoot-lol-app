@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './app/home/HomeScreen';
-import NewsScreen from './app/news/NewsScreen';
-import NewsDetailsScreen from './app/news/NewsDetailsScreen';
+import NewsScreen from './app/news/NewsScreen';  // Certifique-se de que o caminho está correto
+import NewsDetailsScreen from './app/news/NewsDetailsScreen';  // Certifique-se de que o caminho está correto
 import LineupScreen from './app/lineup/LineupScreen';
 import PlayerDetailsScreen from './app/lineup/PlayerDetailsScreen';
 import GamesScreen from './app/games/GamesScreen';
@@ -16,7 +16,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" id={undefined}>
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="News" component={NewsScreen} />
         <Stack.Screen name="NewsDetails" component={NewsDetailsScreen} />

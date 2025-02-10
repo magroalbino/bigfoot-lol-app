@@ -3,10 +3,30 @@ import { View, Text, StyleSheet } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
 
+// Definindo o tipo da rota para o "PlayerDetails"
 type PlayerDetailsScreenRouteProp = RouteProp<RootStackParamList, 'PlayerDetails'>;
 
+// Dados estáticos dos jogadores
+const players = [
+  { id: '1', name: 'Auditorovisk', position: 'Top', elo: 'Gold', age: 22, favoriteChampion: 'Garen', favoriteFood: 'Pizza' },
+  { id: '2', name: 'GALO VIGARISTA', position: 'Jungle', elo: 'Platinum', age: 25, favoriteChampion: 'Lee Sin', favoriteFood: 'Sushi' },
+  { id: '3', name: 'RicaForex', position: 'Mid', elo: 'Diamond', age: 20, favoriteChampion: 'Zed', favoriteFood: 'Burger' },
+  { id: '4', name: 'Smolder', position: 'Adcarry', elo: 'Gold', age: 23, favoriteChampion: 'Jhin', favoriteFood: 'Pasta' },
+  { id: '5', name: 'iquinho', position: 'Support', elo: 'Silver', age: 21, favoriteChampion: 'Thresh', favoriteFood: 'Tacos' },
+];
+
 const PlayerDetailsScreen = ({ route }: { route: PlayerDetailsScreenRouteProp }) => {
-  const { player } = route.params;
+  // Buscando o jogador com base no ID passado
+  const { playerId } = route.params;
+  const player = players.find(p => p.id === playerId);
+
+  if (!player) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>Jogador não encontrado!</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -51,6 +71,11 @@ const styles = StyleSheet.create({
   favoriteFood: {
     fontSize: 20,
     color: '#666',
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'red',
+    textAlign: 'center',
   },
 });
 

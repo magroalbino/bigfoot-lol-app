@@ -17,9 +17,9 @@ export type Player = {
 export type RootStackParamList = {
   Home: undefined;
   News: undefined;
-  NewsDetails: { news: News };
+  NewsDetails: { newsId: string };
   Lineup: undefined;
-  PlayerDetails: { player: Player };
+  PlayerDetails: { playerId: string };
   Games: undefined;
   Donate: undefined;
   DonateDetails: { type: 'PIX' | 'Nano' };

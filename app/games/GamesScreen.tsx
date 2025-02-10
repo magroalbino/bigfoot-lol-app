@@ -1,27 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking } from 'react-native';
-
-const gamesData = [
-  {
-    id: '1',
-    teams: 'BIGFOOT Esports x ALPHA ESPORTS',
-    date: '2025-02-20',
-    time: '18:00',
-    championship: 'Liga Nacional',
-    twitchLink: 'https://www.twitch.tv/bigfootesports',
-  },
-  {
-    id: '2',
-    teams: 'BIGFOOT Esports x BETA ESPORTS',
-    date: '2025-02-25',
-    time: '20:00',
-    championship: 'Liga Internacional',
-    twitchLink: 'https://www.twitch.tv/bigfootesports',
-  },
-  // Adicione mais jogos conforme necessário
-];
+import axios from 'axios';
 
 const GamesScreen = () => {
+  // Estado para armazenar os dados dos jogos
+  const [gamesData, setGamesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Função para buscar os jogos do backend
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const response = await axios.get('http://192.168.50.149:3000/upcoming-games');
+        setGamesData(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError('Erro ao carregar os jogos');
+        setLoading(false);
+      }
+    };
+
+    fetchGames();
+  }, []);  // O array vazio garante que isso aconteça apenas uma vez após o componente ser montado
+
+  // Função para renderizar cada item da lista
   const renderItem = ({ item }) => (
     <View style={styles.gameCard}>
       <Text style={styles.teams}>{item.teams}</Text>
@@ -33,6 +36,22 @@ const GamesScreen = () => {
       </TouchableOpacity>
     </View>
   );
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.header}>Carregando jogos...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.header}>{error}</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

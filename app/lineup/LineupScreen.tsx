@@ -17,7 +17,7 @@ const LineupScreen = () => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.playerCard}
-      onPress={() => navigation.navigate('PlayerDetails', { player: item })}
+      onPress={() => navigation.navigate('PlayerDetails', { playerId: item.id })} // Passando apenas o ID do jogador
     >
       <Text style={styles.playerName}>{item.name}</Text>
       <Text style={styles.playerPosition}>{item.position}</Text>
