@@ -31,6 +31,7 @@ const LineupScreen = () => {
         data={players}
         renderItem={renderItem}
         keyExtractor={item => item.id}
+        style={styles.list} // Adicionando estilo para espaçamento
       />
     </View>
   );
@@ -48,6 +49,9 @@ const styles = StyleSheet.create({
     color: '#000', // Cor preta para o título
     marginBottom: 20,
     textAlign: 'center',
+  },
+  list: {
+    marginTop: 30, // Distância maior entre o título e os itens
   },
   playerCard: {
     backgroundColor: '#ADD8E6',

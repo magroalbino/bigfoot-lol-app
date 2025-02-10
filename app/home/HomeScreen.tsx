@@ -8,7 +8,7 @@ export default function HomeScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>BIGFOOT eSports</Text>
+      <Text style={styles.header}>BIGFOOT Esports</Text>
 
       <Image
         source={require('../../assets/images/logo.png')}
@@ -16,7 +16,7 @@ export default function HomeScreen() {
       />
 
       <Text style={styles.welcomeMessage}>
-        Bem-vindo ao nosso aplicativo! Fique ligado nas próximas atualizações e eventos!
+        Bem-vindo ao nosso aplicativo! Fique ligado nas próximas atualizações e colabore com o projeto no github!
       </Text>
 
       <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('News')}>

@@ -11,9 +11,10 @@ const PlayerDetailsScreen = ({ route }: { route: PlayerDetailsScreenRouteProp })
   return (
     <View style={styles.container}>
       <Text style={styles.name}>{player.name}</Text>
-      <Text style={styles.realName}>Nome: {player.realName}</Text>
+      <Text style={styles.elo}>Elo: {player.elo}</Text>
       <Text style={styles.age}>Idade: {player.age}</Text>
       <Text style={styles.favoriteChampion}>Campeão Favorito: {player.favoriteChampion}</Text>
+      <Text style={styles.favoriteFood}>Comida Favorita: {player.favoriteFood}</Text>
     </View>
   );
 };
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     color: '#333',
   },
-  realName: {
+  elo: {
     fontSize: 20,
     marginBottom: 10,
     color: '#666',
@@ -43,6 +44,11 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   favoriteChampion: {
+    fontSize: 20,
+    marginBottom: 10,
+    color: '#666',
+  },
+  favoriteFood: {
     fontSize: 20,
     color: '#666',
   },

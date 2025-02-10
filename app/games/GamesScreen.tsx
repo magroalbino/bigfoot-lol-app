@@ -8,7 +8,7 @@ const gamesData = [
     date: '2025-02-20',
     time: '18:00',
     championship: 'Liga Nacional',
-    twitchLink: 'https://www.twitch.tv/magroalbino',
+    twitchLink: 'https://www.twitch.tv/bigfootesports',
   },
   {
     id: '2',
@@ -16,7 +16,7 @@ const gamesData = [
     date: '2025-02-25',
     time: '20:00',
     championship: 'Liga Internacional',
-    twitchLink: 'https://www.twitch.tv/magroalbino',
+    twitchLink: 'https://www.twitch.tv/bigfootesports',
   },
   // Adicione mais jogos conforme necessário
 ];

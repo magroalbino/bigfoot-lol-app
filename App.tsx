@@ -8,11 +8,12 @@ import LineupScreen from './app/lineup/LineupScreen';
 import PlayerDetailsScreen from './app/lineup/PlayerDetailsScreen';
 import GamesScreen from './app/games/GamesScreen';
 import DonateScreen from './app/donate/DonateScreen';
+import DonateDetailsScreen from './app/donate/DonateDetailsScreen';
 import { RootStackParamList } from './types';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home" id={undefined}>
@@ -23,7 +24,10 @@ export default function App() {
         <Stack.Screen name="PlayerDetails" component={PlayerDetailsScreen} />
         <Stack.Screen name="Games" component={GamesScreen} />
         <Stack.Screen name="Donate" component={DonateScreen} />
+        <Stack.Screen name="DonateDetails" component={DonateDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
+
+export default App;

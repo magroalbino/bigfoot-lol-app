@@ -1,9 +1,26 @@
+export type News = {
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+};
+
+export type Player = {
+  id: string;
+  name: string;
+  elo: string;
+  age: number;
+  favoriteChampion: string;
+  favoriteFood: string;
+};
+
 export type RootStackParamList = {
   Home: undefined;
   News: undefined;
-  NewsDetails: { news: any };
+  NewsDetails: { news: News };
   Lineup: undefined;
-  PlayerDetails: { player: any };
+  PlayerDetails: { player: Player };
   Games: undefined;
   Donate: undefined;
+  DonateDetails: { type: 'PIX' | 'Nano' };
 };

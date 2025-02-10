@@ -15,6 +15,11 @@ const newsData = [
 const NewsScreen = () => {
     const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('pt-BR'); // Formata a data no formato pt-BR
+    };
+
     const renderItem = ({ item }) => (
         <TouchableOpacity
             style={styles.newsItem}
@@ -29,7 +34,7 @@ const NewsScreen = () => {
         (acc[news.date] = acc[news.date] || []).push(news);
         return acc;
     }, {})).map(date => ({
-        title: date,
+        title: formatDate(date), // Formata a data da seção
         data: newsData.filter(news => news.date === date)
     }));
 
