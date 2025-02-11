@@ -1,6 +1,6 @@
 # BIGFOOT Esports - Aplicativo Mobile
 
-Este projeto é um aplicativo móvel para Android e iOS desenvolvido em **TypeScript** utilizando o **Expo Go**. O aplicativo é destinado ao time de eSports **BIGFOOT Esports** e oferece diversas funcionalidades, incluindo notícias, line-up de jogadores, detalhes dos jogadores, próximos jogos, contribuição e muito mais.
+Este projeto é um aplicativo móvel para Android e iOS desenvolvido em **TypeScript** utilizando o **Expo Go**. O aplicativo é destinado aos torcedores e jogadores da **BIGFOOT Esports** e oferece diversas funcionalidades, incluindo notícias, line-up de jogadores, detalhes dos jogadores, próximos jogos, contribuição e muito mais.
 
 ## 🌟 Funcionalidades Principais
 
