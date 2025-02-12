@@ -1,28 +1,31 @@
 name: EAS Build
 
 on:
+  workflow_dispatch:  # Permite iniciar o build manualmente pelo GitHub
   push:
     branches:
-      - main  # Altere para o nome da sua branch principal, se necessário
+      - main  # O build será disparado automaticamente ao fazer push na branch main
 
 jobs:
-  build:
+  build-android-apk:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 18  # Use a versão Node.js recomendada pelo Expo
+
+      - name: Install Dependencies
+        run: npm install
 
       - name: Install EAS CLI
         run: npm install -g eas-cli
 
-      - name: Authenticate with EAS
-        run: eas login --token ${{ secrets.EXPO_TOKEN }}
-
-      - name: Trigger EAS Build
-        run: eas build --platform android --profile production --non-interactive
+      - name: EAS Build APK
+        run: eas build --platform android --profile preview --non-interactive --output=apk
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
