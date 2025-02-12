@@ -22,9 +22,6 @@
       },
       "package": "com.magroalbino.bigfootlolapp"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
     "extra": {
       "eas": {
         "projectId": "0ea53a31-78e0-4612-ba33-796759ed534a"

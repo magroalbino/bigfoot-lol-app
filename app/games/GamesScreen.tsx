@@ -3,12 +3,12 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking } from 'rea
 import axios from 'axios';
 
 const GamesScreen = () => {
-  // Estado para armazenar os dados dos jogos
+
   const [gamesData, setGamesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Função para buscar os jogos do backend
+
   useEffect(() => {
     const fetchGames = async () => {
       try {
@@ -22,9 +22,9 @@ const GamesScreen = () => {
     };
 
     fetchGames();
-  }, []);  // O array vazio garante que isso aconteça apenas uma vez após o componente ser montado
+  }, []);
 
-  // Função para renderizar cada item da lista
+
   const renderItem = ({ item }) => (
     <View style={styles.gameCard}>
       <Text style={styles.teams}>{item.teams}</Text>

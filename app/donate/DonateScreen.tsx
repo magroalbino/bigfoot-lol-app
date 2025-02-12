@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     minHeight: 150,
   },
   donateButton: {
-    marginTop: 40, // Aumentando o espaçamento entre o título e os botões
+    marginTop: 40,
   },
   image: {
     width: '100%',

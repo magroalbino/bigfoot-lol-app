@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { RootStackParamList } from '../../types'; // Certifique-se de ajustar o caminho conforme necessário
+import { RootStackParamList } from '../../types';
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();

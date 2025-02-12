@@ -2,23 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, SectionList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
-import { News } from '../../types';  // Importação do tipo News
+import { News } from '../../types';
 
 const NewsScreen = () => {
-  const [newsData, setNewsData] = useState<News[]>([]);  // Tipagem correta do estado
-  const [isLoading, setIsLoading] = useState(true); // Estado de loading
+  const [newsData, setNewsData] = useState<News[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   useEffect(() => {
-    fetch('http://192.168.50.149:3000/news')  // Substitua pelo IP local
+    fetch('http://192.168.50.149:3000/news')
       .then(response => response.json())
       .then(data => {
-        setNewsData(data);  // Atribuindo dados tipados
-        setIsLoading(false); // Atualiza o estado após a resposta
+        setNewsData(data);
+        setIsLoading(false);
       })
       .catch(error => {
         console.error('Erro ao buscar notícias:', error);
-        setIsLoading(false); // Garante que o loading seja desativado em caso de erro
+        setIsLoading(false);
       });
   }, []);
 
@@ -30,7 +30,7 @@ const NewsScreen = () => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.newsItem}
-      onPress={() => navigation.navigate('NewsDetails', { newsId: item.id })}  // Passando apenas o ID da notícia
+      onPress={() => navigation.navigate('NewsDetails', { newsId: item.id })}
     >
       <Text style={styles.title}>{item.title}</Text>
       <Text style={styles.author}>{item.author}</Text>
@@ -49,11 +49,11 @@ const NewsScreen = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Notícias</Text>
       {isLoading ? (
-        <ActivityIndicator size="large" color="#0000ff" /> // Indicador de carregamento
+        <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <SectionList
           sections={sections}
-          keyExtractor={(item) => String(item.id)}  // Garantir que o id seja uma string
+          keyExtractor={(item) => String(item.id)}
           renderItem={renderItem}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.dateHeader}>{title}</Text>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { RootStackParamList } from '../../types'; // Ajuste o caminho da importação conforme necessário
+import { RootStackParamList } from '../../types';
 
 const players = [
   { id: '1', name: 'Auditorovisk', position: 'Top' },
@@ -17,7 +17,7 @@ const LineupScreen = () => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       style={styles.playerCard}
-      onPress={() => navigation.navigate('PlayerDetails', { playerId: item.id })} // Passando apenas o ID do jogador
+      onPress={() => navigation.navigate('PlayerDetails', { playerId: item.id })}
     >
       <Text style={styles.playerName}>{item.name}</Text>
       <Text style={styles.playerPosition}>{item.position}</Text>
@@ -31,7 +31,7 @@ const LineupScreen = () => {
         data={players}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        style={styles.list} // Adicionando estilo para espaçamento
+        style={styles.list}
       />
     </View>
   );
@@ -46,12 +46,12 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#000', // Cor preta para o título
+    color: '#000',
     marginBottom: 20,
     textAlign: 'center',
   },
   list: {
-    marginTop: 30, // Distância maior entre o título e os itens
+    marginTop: 30,
   },
   playerCard: {
     backgroundColor: '#ADD8E6',

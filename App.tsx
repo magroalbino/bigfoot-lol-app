@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './app/home/HomeScreen';
-import NewsScreen from './app/news/NewsScreen';  // Certifique-se de que o caminho está correto
-import NewsDetailsScreen from './app/news/NewsDetailsScreen';  // Certifique-se de que o caminho está correto
+import NewsScreen from './app/news/NewsScreen'; 
+import NewsDetailsScreen from './app/news/NewsDetailsScreen';
 import LineupScreen from './app/lineup/LineupScreen';
 import PlayerDetailsScreen from './app/lineup/PlayerDetailsScreen';
 import GamesScreen from './app/games/GamesScreen';

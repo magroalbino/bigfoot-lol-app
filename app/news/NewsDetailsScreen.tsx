@@ -3,15 +3,15 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
 
 const NewsDetailsScreen = ({ route }: any) => {
-  const { newsId } = route.params;  // Pegando o ID da notícia da navegação
+  const { newsId } = route.params;
   const [news, setNews] = useState<any>(null);
 
   useEffect(() => {
-    // Fazendo a requisição GET para obter as notícias
+    
     axios
-      .get('http://192.168.50.149:3000/news')  // Ajuste o IP conforme necessário
+      .get('http://192.168.50.149:3000/news')
       .then((response) => {
-        // Encontrando a notícia com base no ID
+        
         const selectedNews = response.data.find((item: any) => item.id === newsId);
         setNews(selectedNews);
       })

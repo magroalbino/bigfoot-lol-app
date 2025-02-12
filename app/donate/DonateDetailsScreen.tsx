@@ -7,8 +7,8 @@ type DonateDetailsScreenRouteProp = RouteProp<RootStackParamList, 'DonateDetails
 
 const DonateDetailsScreen = ({ route }: { route: DonateDetailsScreenRouteProp }) => {
   const { type } = route.params;
-  const pixKey = 'yanrenat@outlook.com'; // Substitua pela chave PIX real
-  const cryptoAddress = 'nano_3e5w3jwsmi5jeuyuhogcge3ibtehw3w4n79fwm4haf48sj7aenwpwefrotms'; // Substitua pelo endereço de criptomoeda real
+  const pixKey = '773f51bf-d4d9-48bc-9b26-812ed63618a8';
+  const cryptoAddress = 'nano_3e5w3jwsmi5jeuyuhogcge3ibtehw3w4n79fwm4haf48sj7aenwpwefrotms';
 
   const copyToClipboard = (text: string) => {
     Clipboard.setString(text);
@@ -21,7 +21,7 @@ const DonateDetailsScreen = ({ route }: { route: DonateDetailsScreenRouteProp })
         <>
           <Text style={styles.text}>Doar via PIX</Text>
           <Image
-            source={require('../../assets/images/qrcode-pix.png')} // Substitua pelo caminho correto da imagem do QR code do PIX
+            source={require('../../assets/images/qrcode-pix.png')}
             style={styles.qrCode}
           />
           <TouchableOpacity style={styles.button} onPress={() => copyToClipboard(pixKey)}>
@@ -32,7 +32,7 @@ const DonateDetailsScreen = ({ route }: { route: DonateDetailsScreenRouteProp })
         <>
           <Text style={styles.text}>Doar via Criptomoeda Nano</Text>
           <Image
-            source={require('../../assets/images/qrcode-nano.png')} // Substitua pelo caminho correto da imagem do QR code da criptomoeda
+            source={require('../../assets/images/qrcode-nano.png')}
             style={styles.qrCode}
           />
           <TouchableOpacity style={styles.button} onPress={() => copyToClipboard(cryptoAddress)}>

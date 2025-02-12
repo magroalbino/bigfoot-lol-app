@@ -3,10 +3,10 @@ import { View, Text, StyleSheet } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
 
-// Definindo o tipo da rota para o "PlayerDetails"
+
 type PlayerDetailsScreenRouteProp = RouteProp<RootStackParamList, 'PlayerDetails'>;
 
-// Dados estáticos dos jogadores
+
 const players = [
   { id: '1', name: 'Auditorovisk', position: 'Top', elo: 'Gold', age: 22, favoriteChampion: 'Garen', favoriteFood: 'Pizza' },
   { id: '2', name: 'GALO VIGARISTA', position: 'Jungle', elo: 'Platinum', age: 25, favoriteChampion: 'Lee Sin', favoriteFood: 'Sushi' },
@@ -16,7 +16,7 @@ const players = [
 ];
 
 const PlayerDetailsScreen = ({ route }: { route: PlayerDetailsScreenRouteProp }) => {
-  // Buscando o jogador com base no ID passado
+
   const { playerId } = route.params;
   const player = players.find(p => p.id === playerId);
 
