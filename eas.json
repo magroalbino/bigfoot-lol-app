@@ -1,0 +1,30 @@
+{
+  "cli": {
+    "version": ">= 0.38.0"
+  },
+  "build": {
+    "apkBuild": {
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "aabBuild": {
+      "android": {
+        "buildType": "app-bundle"
+      }
+    },
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "distribution": "store"
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
