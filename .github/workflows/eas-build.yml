@@ -30,10 +30,3 @@ jobs:
         run: eas build --platform android --profile preview --non-interactive --clear-cache
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
-      - name: Upload Artifact (Opcional, mas recomendado)
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-apk
-          path: dist/*.apk
-          if-no-files: error
