@@ -20,8 +20,7 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        run: |
-          npm install || npm install || npm install
+        run: npm ci
 
       - name: Install EAS CLI
         run: npm install -g eas-cli
@@ -30,3 +29,9 @@ jobs:
         run: eas build --platform android --profile preview --non-interactive --clear-cache
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-apk
+          path: dist/*.apk
