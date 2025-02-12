@@ -1,0 +1,28 @@
+name: EAS Build
+
+on:
+  push:
+    branches:
+      - main  # Altere para o nome da sua branch principal, se necessário
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Authenticate with EAS
+        run: eas login --token ${{ secrets.EXPO_TOKEN }}
+
+      - name: Trigger EAS Build
+        run: eas build --platform android --profile production --non-interactive
