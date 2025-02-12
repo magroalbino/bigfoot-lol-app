@@ -1,10 +1,10 @@
 name: EAS Build
 
 on:
-  workflow_dispatch:  # Permite iniciar o build manualmente pelo GitHub
+  workflow_dispatch:
   push:
     branches:
-      - main  # O build será disparado automaticamente ao fazer push na branch main
+      - main
 
 jobs:
   build-android-apk:
@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # Use a versão Node.js recomendada pelo Expo
+          node-version: 18
 
       - name: Install Dependencies
         run: npm install
