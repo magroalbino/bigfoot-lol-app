@@ -1,0 +1,40 @@
+{
+  "cli": {
+    "version": ">= 15.0.9",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "apkBuild": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "node": "18.18.2",
+      "releaseChannel": "default"
+    },
+    "aabBuild": {
+      "android": {
+        "buildType": "app-bundle"
+      }
+    },
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "environment": "development"
+    },
+    "preview": {
+      "distribution": "internal",
+      "environment": "preview"
+    },
+    "production": {
+      "distribution": "store",
+      "environment": "production"
+    },
+    "my-profile": {
+      "environment": "production"
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
