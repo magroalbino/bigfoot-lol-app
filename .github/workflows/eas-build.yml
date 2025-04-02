@@ -1,0 +1,32 @@
+name: EAS Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-android-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli
+
+      - name: EAS Build APK
+        run: eas build --platform android --profile preview --non-interactive --clear-cache
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}

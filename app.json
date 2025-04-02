@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "BIGFOOT LoL App",
+    "slug": "bigfoot-lol-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": false,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#3498db"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "platforms": ["android"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.magroalbino.bigfootlolapp",
+      "versionCode": 1
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0ea53a31-78e0-4612-ba33-796759ed534a"
+      }
+    },
+    "owner": "magroalbino"
+  }
+}
