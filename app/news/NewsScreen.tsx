@@ -18,7 +18,7 @@ const NewsScreen = () => {
 
   const fetchNews = () => {
     setIsLoading(true);
-    fetch('https://bigfoot-lol-app.vercel.app/news')
+    fetch('https://bigfoot-backend-api.vercel.app/news')
       .then(response => {
         if (!response.ok) throw new Error('Erro na resposta: ' + response.status);
         return response.json();

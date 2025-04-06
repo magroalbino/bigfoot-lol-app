@@ -7,11 +7,11 @@ const NewsDetailsScreen = ({ route }: any) => {
   const [news, setNews] = useState<any>(null);
 
   useEffect(() => {
-    
+
     axios
-      .get('https://bigfoot-lol-app.vercel.app/news')
+      .get('https://bigfoot-backend-api.vercel.app/news')
       .then((response) => {
-        
+
         const selectedNews = response.data.find((item: any) => item.id === newsId);
         setNews(selectedNews);
       })
