@@ -3,14 +3,26 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './app/home/HomeScreen';
-import NewsScreen from './app/news/NewsScreen'; 
+import NewsScreen from './app/news/NewsScreen';
 import NewsDetailsScreen from './app/news/NewsDetailsScreen';
 import LineupScreen from './app/lineup/LineupScreen';
 import PlayerDetailsScreen from './app/lineup/PlayerDetailsScreen';
 import GamesScreen from './app/games/GamesScreen';
 import DonateScreen from './app/donate/DonateScreen';
 import DonateDetailsScreen from './app/donate/DonateDetailsScreen';
-import { RootStackParamList } from './types';
+import PointsScreen from './app/points/PointsScreen';
+
+export type RootStackParamList = {
+  Home: undefined;
+  News: undefined;
+  NewsDetails: { id: string };
+  Lineup: undefined;
+  PlayerDetails: { playerId: string };
+  Games: undefined;
+  Donate: undefined;
+  DonateDetails: { donationId: string };
+  PointsScreen: undefined;
+};
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -28,6 +40,7 @@ const App = () => {
           <Stack.Screen name="Games" component={GamesScreen} />
           <Stack.Screen name="Donate" component={DonateScreen} />
           <Stack.Screen name="DonateDetails" component={DonateDetailsScreen} />
+          <Stack.Screen name="PointsScreen" component={PointsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     );

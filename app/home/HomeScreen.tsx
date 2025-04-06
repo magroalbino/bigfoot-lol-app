@@ -2,50 +2,63 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   console.log('HomeScreen: Início');
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>BIGFOOT Esports</Text>
+    <View style={styles.outerContainer}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.header}>BIGFOOT Esports</Text>
 
-      <Image
-        source={require('../../assets/images/logo.png')}
-        style={styles.logo}
-      />
+        <Image
+          source={require('../../assets/images/logo.png')}
+          style={styles.logo}
+        />
 
-      <Text style={styles.welcomeMessage}>
-        Bem-vindo ao nosso aplicativo! Fique ligado nas próximas atualizações e colabore com o projeto no github!
-      </Text>
+        <Text style={styles.welcomeMessage}>
+          Bem-vindo ao nosso aplicativo! Fique ligado nas próximas atualizações e colabore com o projeto no GitHub!
+        </Text>
 
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('News')}>
-        <Text style={styles.buttonText}>Notícias</Text>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('News')}>
+          <Text style={styles.buttonText}>Notícias</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Lineup')}>
+          <Text style={styles.buttonText}>Line-up</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Games')}>
+          <Text style={styles.buttonText}>Próximos Jogos</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.donateButton} onPress={() => navigation.navigate('Donate')}>
+          <Text style={styles.donateButtonText}>Contribua!</Text>
+        </TouchableOpacity>
+      </ScrollView>
+
+      <TouchableOpacity
+        style={styles.pointsButton}
+        onPress={() => navigation.navigate('PointsScreen')}
+      >
+        <Icon name="star" size={20} color="#fff" /> {/* Tamanho reduzido */}
       </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Lineup')}>
-        <Text style={styles.buttonText}>Line-up</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Games')}>
-        <Text style={styles.buttonText}>Próximos Jogos</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.donateButton} onPress={() => navigation.navigate('Donate')}>
-        <Text style={styles.donateButtonText}>Contribua!</Text>
-      </TouchableOpacity>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  outerContainer: {
+    flex: 1,
+    backgroundColor: '#e0f7fa',
+  },
   container: {
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#e0f7fa',
   },
   header: {
     fontSize: 32,
@@ -92,5 +105,16 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  pointsButton: {
+    position: 'absolute',
+    top: 40,          // Movido para o topo
+    right: 20,        // Mantido à direita
+    width: 30,        // Reduzido de 40 para 30
+    height: 30,       // Reduzido de 40 para 30
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#007AFF',
+    borderRadius: 15, // Ajustado para o novo tamanho
   },
 });

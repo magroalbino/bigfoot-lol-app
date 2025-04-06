@@ -23,4 +23,5 @@ export type RootStackParamList = {
   Games: undefined;
   Donate: undefined;
   DonateDetails: { type: 'PIX' | 'Nano' };
+  PointsScreen: undefined;
 };
