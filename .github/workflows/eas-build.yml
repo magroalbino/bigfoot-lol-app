@@ -1,3 +1,5 @@
+# Comentário técnico: Commit criado para forçar nova execução do workflow com EXPO_TOKEN atualizado
+
 name: EAS Build
 
 on:
