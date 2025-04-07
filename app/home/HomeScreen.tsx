@@ -1,120 +1,166 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+} from 'react-native';
+import Animated, {
+  FadeInDown,
+  useSharedValue,
+  withSpring,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  console.log('HomeScreen: Início');
+
+  const pulse = useSharedValue(1);
+  React.useEffect(() => {
+    pulse.value = withRepeat(withTiming(1.1, { duration: 800 }), -1, true);
+  }, []);
+
+  const fabStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: pulse.value }],
+  }));
+
+  const createAnimatedButton = (
+    text: string,
+    onPress: () => void,
+    color = '#007AFF',
+    delay = 0
+  ) => {
+    const scale = useSharedValue(1);
+
+    const animatedScaleStyle = useAnimatedStyle(() => ({
+      transform: [{ scale: scale.value }],
+    }));
+
+    return (
+      <Animated.View
+        style={{ width: '100%' }}
+        entering={FadeInDown.duration(400).delay(delay)}
+      >
+        <Animated.View style={[styles.animatedButtonContainer, animatedScaleStyle]}>
+          <Pressable
+            onPressIn={() => (scale.value = withSpring(0.95))}
+            onPressOut={() => (scale.value = withSpring(1))}
+            onPress={onPress}
+            style={[styles.menuButton, { backgroundColor: color }]}
+          >
+            <Text
+              style={[
+                styles.menuButtonText,
+                color === '#FFCA28' ? { color: '#000' } : { color: '#fff' },
+              ]}
+            >
+              {text}
+            </Text>
+          </Pressable>
+        </Animated.View>
+      </Animated.View>
+    );
+  };
 
   return (
-    <View style={styles.outerContainer}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.header}>BIGFOOT Esports</Text>
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <Animated.View entering={FadeInDown.duration(600)}>
+          <Image
+            source={require('../../assets/images/logo.png')}
+            style={styles.logo}
+          />
+        </Animated.View>
 
-        <Image
-          source={require('../../assets/images/logo.png')}
-          style={styles.logo}
-        />
+        <Animated.View entering={FadeInDown.duration(600).delay(200)}>
+          <Text style={styles.title}>BIGFOOT Esports</Text>
+        </Animated.View>
 
-        <Text style={styles.welcomeMessage}>
-          Bem-vindo ao nosso aplicativo! Fique ligado nas próximas atualizações e colabore com o projeto no GitHub!
-        </Text>
+        <Animated.View entering={FadeInDown.duration(600).delay(400)}>
+          <Text style={styles.subtitle}>
+            Bem-vindo ao nosso aplicativo! Fique ligado nas próximas atualizações e colabore com o projeto no GitHub!
+          </Text>
+        </Animated.View>
 
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('News')}>
-          <Text style={styles.buttonText}>Notícias</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Lineup')}>
-          <Text style={styles.buttonText}>Line-up</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Games')}>
-          <Text style={styles.buttonText}>Próximos Jogos</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.donateButton} onPress={() => navigation.navigate('Donate')}>
-          <Text style={styles.donateButtonText}>Contribua!</Text>
-        </TouchableOpacity>
+        {/* Botões com animação escalonada */}
+        {createAnimatedButton('Notícias', () => navigation.navigate('News'), '#007AFF', 600)}
+        {createAnimatedButton('Line-up', () => navigation.navigate('Lineup'), '#007AFF', 800)}
+        {createAnimatedButton('Próximos Jogos', () => navigation.navigate('Games'), '#007AFF', 1000)}
+        {createAnimatedButton('Contribua!', () => navigation.navigate('Donate'), '#FFCA28', 1200)}
       </ScrollView>
 
-      <TouchableOpacity
-        style={styles.pointsButton}
-        onPress={() => navigation.navigate('PointsScreen')}
-      >
-        <Icon name="star" size={20} color="#fff" /> {/* Tamanho reduzido */}
-      </TouchableOpacity>
+      <Animated.View entering={FadeInDown.duration(600).delay(1400)}>
+        <Animated.View style={[styles.fab, fabStyle]}>
+          <Pressable onPress={() => navigation.navigate('PointsScreen')}>
+            <Icon name="star" size={22} color="#fff" />
+          </Pressable>
+        </Animated.View>
+      </Animated.View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  outerContainer: {
-    flex: 1,
-    backgroundColor: '#e0f7fa',
-  },
   container: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 20,
+    flex: 1,
+    backgroundColor: '#f0f4f8',
   },
-  header: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#00bcd4',
-    marginBottom: 20,
-    textShadowColor: '#000',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 4,
+  scrollContent: {
+    alignItems: 'center',
+    paddingVertical: 40,
+    paddingHorizontal: 20,
   },
   logo: {
-    width: 200,
-    height: 200,
-    marginBottom: 20,
+    width: 140,
+    height: 140,
+    marginBottom: 10,
+    alignSelf: 'center',
   },
-  welcomeMessage: {
-    fontSize: 18,
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#007AFF',
+    marginBottom: 8,
     textAlign: 'center',
-    color: '#333',
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#444',
+    textAlign: 'center',
     marginBottom: 30,
   },
-  button: {
-    backgroundColor: '#00bcd4',
-    padding: 15,
-    borderRadius: 8,
-    marginVertical: 10,
-    width: '80%',
+  animatedButtonContainer: {
+    width: '100%',
+    marginVertical: 8,
+  },
+  menuButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 40,
+    borderRadius: 10,
+    width: '100%',
     alignItems: 'center',
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
+  menuButtonText: {
+    fontSize: 16,
     fontWeight: 'bold',
   },
-  donateButton: {
-    backgroundColor: '#ffca28',
-    padding: 15,
-    borderRadius: 8,
-    marginVertical: 10,
-    width: '80%',
-    alignItems: 'center',
-  },
-  donateButtonText: {
-    color: '#000',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  pointsButton: {
+  fab: {
     position: 'absolute',
-    top: 40,          // Movido para o topo
-    right: 20,        // Mantido à direita
-    width: 30,        // Reduzido de 40 para 30
-    height: 30,       // Reduzido de 40 para 30
-    justifyContent: 'center',
-    alignItems: 'center',
+    bottom: 30,
+    right: 30,
     backgroundColor: '#007AFF',
-    borderRadius: 15, // Ajustado para o novo tamanho
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 6,
   },
 });
