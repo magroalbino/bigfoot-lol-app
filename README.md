@@ -39,7 +39,7 @@ Este projeto é um aplicativo móvel para Android e iOS desenvolvido em **TypeSc
 - **DonateScreen.tsx**  
   Permite aos usuários fazerem doações para apoiar a equipe.
 
-- **PointsScreen.tsx**
+- **PointsScreen.tsx**  
   Permite aos usuários realizar check-ins diários para acumular pontos, visualizar o total de pontos acumulados, consultar o histórico de check-ins e resgatar prêmios na loja usando os
   pontos obtidos.
 
