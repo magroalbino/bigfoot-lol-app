@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, SectionList, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import {
+  View,
+  Text,
+  SectionList,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 export type News = {
   id: string;
@@ -14,7 +22,6 @@ const NewsScreen = () => {
   const [newsData, setNewsData] = useState<News[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
 
   const fetchNews = () => {
     setIsLoading(true);
@@ -34,32 +41,56 @@ const NewsScreen = () => {
       });
   };
 
-
   useEffect(() => {
     fetchNews();
   }, []);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR');
+  const formatDateWithDay = (dateString: string) => {
+    try {
+      const parts = dateString.split('-');
+      if (parts.length === 3) {
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1;
+        const year = parseInt(parts[2], 10);
+        const date = new Date(year, month, day);
+
+        const options: Intl.DateTimeFormatOptions = {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric',
+          weekday: 'long',
+        };
+        return date.toLocaleDateString('pt-BR', options);
+      } else {
+        return 'Data Inválida';
+      }
+    } catch (error) {
+      console.error('Erro ao formatar data:', error);
+      return 'Data Inválida';
+    }
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.newsItem}
-      onPress={() => navigation.navigate('NewsDetails', { newsId: item.id })}
-    >
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.author}>{item.author}</Text>
-    </TouchableOpacity>
+  const renderItem = ({ item, index }) => (
+    <Animated.View entering={FadeInDown.duration(500).delay(index * 100)} style={styles.itemWrapper}>
+      <TouchableOpacity
+        style={styles.newsItem}
+        onPress={() => navigation.navigate('NewsDetails', { newsId: item.id })}
+      >
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.author}>{item.author}</Text>
+        <Text style={styles.backendDate}>{item.date}</Text>
+      </TouchableOpacity>
+    </Animated.View>
   );
 
-  const sections = Object.keys(newsData.reduce((acc, news) => {
-    (acc[news.date] = acc[news.date] || []).push(news);
-    return acc;
-  }, {})).map(date => ({
-    title: formatDate(date),
-    data: newsData.filter(news => news.date === date)
+  const sections = Object.keys(
+    newsData.reduce((acc, news) => {
+      (acc[news.date] = acc[news.date] || []).push(news);
+      return acc;
+    }, {} as Record<string, News[]>)
+  ).map(backendDate => ({
+    title: formatDateWithDay(backendDate),
+    data: newsData.filter(news => news.date === backendDate),
   }));
 
   return (
@@ -77,7 +108,7 @@ const NewsScreen = () => {
       ) : (
         <SectionList
           sections={sections}
-          keyExtractor={(item) => String(item.id)}
+          keyExtractor={item => String(item.id)}
           renderItem={renderItem}
           renderSectionHeader={({ section: { title } }) => (
             <Text style={styles.dateHeader}>{title}</Text>
@@ -103,33 +134,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'center',
   },
-  newsItem: {
-    padding: 15,
-    backgroundColor: '#ADD8E6',
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  author: {
-    fontSize: 14,
-    color: '#000',
-  },
-  dateHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginVertical: 10,
-    color: '#333',
-  },
-  separator: {
-    height: 10,
-  },
-  sectionListContent: {
-    paddingBottom: 20,
-  },
   refreshButton: {
     backgroundColor: '#00bcd4',
     width: 40,
@@ -143,6 +147,41 @@ const styles = StyleSheet.create({
   refreshIcon: {
     fontSize: 24,
     color: '#fff',
+  },
+  newsItem: {
+    padding: 15,
+    backgroundColor: '#ADD8E6',
+    borderRadius: 10,
+  },
+  itemWrapper: {
+    marginBottom: 10,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  author: {
+    fontSize: 14,
+    color: '#000',
+  },
+  backendDate: {
+    fontSize: 12,
+    color: '#777',
+    marginTop: 5,
+  },
+  dateHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 10,
+    color: '#333',
+    textTransform: 'capitalize',
+  },
+  separator: {
+    height: 10,
+  },
+  sectionListContent: {
+    paddingBottom: 20,
   },
   loadingIndicator: {
     marginTop: 20,

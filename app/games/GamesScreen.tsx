@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Linking } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import axios from 'axios';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 
 const GamesScreen = () => {
-
   const [gamesData, setGamesData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -23,19 +22,6 @@ const GamesScreen = () => {
 
     fetchGames();
   }, []);
-
-
-  const renderItem = ({ item }) => (
-    <View style={styles.gameCard}>
-      <Text style={styles.teams}>{item.teams}</Text>
-      <Text style={styles.details}>Dia: {item.date}</Text>
-      <Text style={styles.details}>Horário: {item.time}</Text>
-      <Text style={styles.details}>Campeonato: {item.championship}</Text>
-      <TouchableOpacity onPress={() => Linking.openURL(item.twitchLink)}>
-        <Text style={styles.twitchLink}>Assista na Twitch</Text>
-      </TouchableOpacity>
-    </View>
-  );
 
   if (loading) {
     return (
@@ -56,11 +42,22 @@ const GamesScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Próximos Jogos</Text>
-      <FlatList
-        data={gamesData}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
+
+      {gamesData.map((item, index) => (
+        <Animated.View
+          key={item.id}
+          entering={FadeInDown.duration(500).delay(index * 150)}
+          style={styles.gameCard}
+        >
+          <Text style={styles.teams}>{item.teams}</Text>
+          <Text style={styles.details}>Dia: {item.date}</Text>
+          <Text style={styles.details}>Horário: {item.time}</Text>
+          <Text style={styles.details}>Campeonato: {item.championship}</Text>
+          <TouchableOpacity onPress={() => Linking.openURL(item.twitchLink)}>
+            <Text style={styles.twitchLink}>Assista na Twitch</Text>
+          </TouchableOpacity>
+        </Animated.View>
+      ))}
     </View>
   );
 };
@@ -70,6 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#f5f5f5',
+    justifyContent: 'flex-start',
   },
   header: {
     fontSize: 28,
@@ -83,6 +81,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     marginBottom: 15,
+    elevation: 4,
   },
   teams: {
     fontSize: 20,

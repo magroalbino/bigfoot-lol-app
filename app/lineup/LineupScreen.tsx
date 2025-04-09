@@ -1,37 +1,74 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  Pressable,
+} from 'react-native';
+import Animated, {
+  useSharedValue,
+  withSpring,
+  useAnimatedStyle,
+  FadeInDown,
+} from 'react-native-reanimated';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
 
-const players = [
-  { id: '1', name: 'Auditorovisk', position: 'Top' },
-  { id: '2', name: 'GALO VIGARISTA', position: 'Jungle' },
-  { id: '3', name: 'RicaForex', position: 'Mid' },
-  { id: '4', name: 'Smolder', position: 'Adcarry' },
-  { id: '5', name: 'iquinho', position: 'Support' },
+const founders = [
+  { id: '1', name: 'Fabrício Ricard', image: require('../../assets/images/ghibli1.png') },
+  { id: '2', name: 'Yan Renat', image: require('../../assets/images/ghibli2.png') },
 ];
+
+type FounderItemProps = {
+  item: { id: string; name: string; image: any };
+  index: number;
+  onPress: (id: string) => void;
+};
+
+const FounderCard: React.FC<FounderItemProps> = ({ item, index, onPress }) => {
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  return (
+    <Animated.View entering={FadeInDown.duration(500).delay(index * 200)} style={styles.cardWrapper}>
+      <Pressable
+        onPressIn={() => (scale.value = withSpring(0.95))}
+        onPressOut={() => (scale.value = withSpring(1))}
+        onPress={() => onPress(item.id)}
+        style={styles.founderCard}
+      >
+        <Animated.Image
+          source={item.image}
+          style={[styles.founderPhoto, animatedStyle]}
+        />
+        <Text style={styles.founderName}>{item.name}</Text>
+      </Pressable>
+    </Animated.View>
+  );
+};
 
 const LineupScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={styles.playerCard}
-      onPress={() => navigation.navigate('PlayerDetails', { playerId: item.id })}
-    >
-      <Text style={styles.playerName}>{item.name}</Text>
-      <Text style={styles.playerPosition}>{item.position}</Text>
-    </TouchableOpacity>
-  );
+  const handlePress = (id: string) => {
+    navigation.navigate('PlayerDetails', { playerId: id });
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Line-up do BIGFOOT Esports 2025</Text>
+      <Text style={styles.header}>Equipe Fundadora do BIGFOOT Esports 2025</Text>
       <FlatList
-        data={players}
-        renderItem={renderItem}
+        data={founders}
         keyExtractor={item => item.id}
-        style={styles.list}
+        renderItem={({ item, index }) => (
+          <FounderCard item={item} index={index} onPress={handlePress} />
+        )}
+        contentContainerStyle={{ paddingBottom: 40 }}
       />
     </View>
   );
@@ -50,23 +87,27 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  list: {
-    marginTop: 30,
+  cardWrapper: {
+    width: '100%',
   },
-  playerCard: {
+  founderCard: {
     backgroundColor: '#ADD8E6',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
+    padding: 20,
+    borderRadius: 12,
+    marginBottom: 20,
     alignItems: 'center',
+    elevation: 4,
   },
-  playerName: {
+  founderPhoto: {
+    width: 90, // ⬆️ Aumentado para dar mais destaque
+    height: 90,
+    borderRadius: 45,
+    resizeMode: 'cover',
+    marginBottom: 12,
+  },
+  founderName: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#000',
-  },
-  playerPosition: {
-    fontSize: 16,
     color: '#000',
   },
 });

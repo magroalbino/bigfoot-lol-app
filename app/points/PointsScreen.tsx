@@ -10,9 +10,9 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const REWARD_ITEMS = [
-    { id: '1', name: 'Caneca', cost: 50 },
-    { id: '2', name: 'Mousepad', cost: 100 },
-    { id: '3', name: 'Camisa', cost: 200 },
+    { id: '1', name: 'Caneca', cost: 1800 },
+    { id: '2', name: 'Mousepad', cost: 2500 },
+    { id: '3', name: 'Camisa', cost: 3200 },
 ];
 
 const PointsScreen = () => {

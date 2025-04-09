@@ -3,38 +3,46 @@ import { View, Text, StyleSheet } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
 
-
 type PlayerDetailsScreenRouteProp = RouteProp<RootStackParamList, 'PlayerDetails'>;
 
-
-const players = [
-  { id: '1', name: 'Auditorovisk', position: 'Top', elo: 'Gold', age: 22, favoriteChampion: 'Garen', favoriteFood: 'Pizza' },
-  { id: '2', name: 'GALO VIGARISTA', position: 'Jungle', elo: 'Platinum', age: 25, favoriteChampion: 'Lee Sin', favoriteFood: 'Sushi' },
-  { id: '3', name: 'RicaForex', position: 'Mid', elo: 'Diamond', age: 20, favoriteChampion: 'Zed', favoriteFood: 'Burger' },
-  { id: '4', name: 'Smolder', position: 'Adcarry', elo: 'Gold', age: 23, favoriteChampion: 'Jhin', favoriteFood: 'Pasta' },
-  { id: '5', name: 'iquinho', position: 'Support', elo: 'Silver', age: 21, favoriteChampion: 'Thresh', favoriteFood: 'Tacos' },
+const founders = [
+  {
+    id: '1',
+    name: 'Fabrício Ricard',
+    elo: 'Ouro', // Exemplo fictício
+    age: 29,
+    favoriteChampion: 'Aatrox', // Exemplo fictício
+    favoriteFood: 'Churrasco', // Exemplo fictício
+  },
+  {
+    id: '2',
+    name: 'Yan Renat',
+    elo: 'Prata', // Exemplo fictício
+    age: 29,
+    favoriteChampion: 'Yasuo', // Exemplo fictício
+    favoriteFood: 'Sushi', // Exemplo fictício
+  },
 ];
 
 const PlayerDetailsScreen = ({ route }: { route: PlayerDetailsScreenRouteProp }) => {
-
   const { playerId } = route.params;
-  const player = players.find(p => p.id === playerId);
+  const founder = founders.find(f => f.id === playerId);
 
-  if (!player) {
+  if (!founder) {
     return (
       <View style={styles.container}>
-        <Text style={styles.errorText}>Jogador não encontrado!</Text>
+        <Text style={styles.errorText}>Fundador não encontrado!</Text>
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.name}>{player.name}</Text>
-      <Text style={styles.elo}>Elo: {player.elo}</Text>
-      <Text style={styles.age}>Idade: {player.age}</Text>
-      <Text style={styles.favoriteChampion}>Campeão Favorito: {player.favoriteChampion}</Text>
-      <Text style={styles.favoriteFood}>Comida Favorita: {player.favoriteFood}</Text>
+      <Text style={styles.name}>{founder.name}</Text>
+      <Text style={styles.elo}>Elo: {founder.elo}</Text>
+      <Text style={styles.age}>Idade: {founder.age}</Text>
+      <Text style={styles.favoriteChampion}>Campeão Favorito: {founder.favoriteChampion}</Text>
+      <Text style={styles.favoriteFood}>Comida Favorita: {founder.favoriteFood}</Text>
     </View>
   );
 };

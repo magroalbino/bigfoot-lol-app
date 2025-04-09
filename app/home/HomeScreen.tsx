@@ -8,27 +8,37 @@ import {
   Pressable,
 } from 'react-native';
 import Animated, {
+  FadeIn,
   FadeInDown,
   useSharedValue,
   withSpring,
-  useAnimatedStyle,
   withRepeat,
   withTiming,
+  useAnimatedStyle,
 } from 'react-native-reanimated';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import LottieView from 'lottie-react-native';
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const pulse = useSharedValue(1);
+  const logoGlow = useSharedValue(0);
+
   React.useEffect(() => {
     pulse.value = withRepeat(withTiming(1.1, { duration: 800 }), -1, true);
+    logoGlow.value = withRepeat(withTiming(1, { duration: 2000 }), -1, true);
   }, []);
 
   const fabStyle = useAnimatedStyle(() => ({
     transform: [{ scale: pulse.value }],
+  }));
+
+  const logoGlowStyle = useAnimatedStyle(() => ({
+    opacity: 0.9 + logoGlow.value * 0.1,
+    transform: [{ scale: 1 + logoGlow.value * 0.05 }],
   }));
 
   const createAnimatedButton = (
@@ -39,7 +49,7 @@ export default function HomeScreen() {
   ) => {
     const scale = useSharedValue(1);
 
-    const animatedScaleStyle = useAnimatedStyle(() => ({
+    const animatedStyle = useAnimatedStyle(() => ({
       transform: [{ scale: scale.value }],
     }));
 
@@ -48,7 +58,7 @@ export default function HomeScreen() {
         style={{ width: '100%' }}
         entering={FadeInDown.duration(400).delay(delay)}
       >
-        <Animated.View style={[styles.animatedButtonContainer, animatedScaleStyle]}>
+        <Animated.View style={[styles.animatedButtonContainer, animatedStyle]}>
           <Pressable
             onPressIn={() => (scale.value = withSpring(0.95))}
             onPressOut={() => (scale.value = withSpring(1))}
@@ -71,16 +81,28 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      {/* ❄️ Fundo com nevasca */}
+      <LottieView
+        source={require('../../assets/animations/snowfall.json')}
+        autoPlay
+        loop
+        style={StyleSheet.absoluteFill}
+      />
+
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Animated.View entering={FadeInDown.duration(600)}>
-          <Image
-            source={require('../../assets/images/logo.png')}
-            style={styles.logo}
-          />
+        <Animated.View entering={FadeIn.duration(800)} style={styles.logoContainer}>
+          <Animated.View style={[styles.logoWrapper, logoGlowStyle]}>
+            <Image
+              source={require('../../assets/images/logo.png')}
+              style={styles.logo}
+            />
+          </Animated.View>
         </Animated.View>
 
         <Animated.View entering={FadeInDown.duration(600).delay(200)}>
-          <Text style={styles.title}>BIGFOOT Esports</Text>
+          <Pressable onPress={() => navigation.navigate('Lineup')}>
+            <Text style={styles.title}>BIGFOOT Esports</Text>
+          </Pressable>
         </Animated.View>
 
         <Animated.View entering={FadeInDown.duration(600).delay(400)}>
@@ -89,7 +111,6 @@ export default function HomeScreen() {
           </Text>
         </Animated.View>
 
-        {/* Botões com animação escalonada */}
         {createAnimatedButton('Notícias', () => navigation.navigate('News'), '#007AFF', 600)}
         {createAnimatedButton('Line-up', () => navigation.navigate('Lineup'), '#007AFF', 800)}
         {createAnimatedButton('Próximos Jogos', () => navigation.navigate('Games'), '#007AFF', 1000)}
@@ -110,25 +131,38 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f4f8',
   },
   scrollContent: {
     alignItems: 'center',
     paddingVertical: 40,
     paddingHorizontal: 20,
+    paddingBottom: 80,
+  },
+  logoContainer: {
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  logoWrapper: {
+    width: 150,
+    height: 150,
+    backgroundColor: '#fff',
+    borderRadius: 75,
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+    elevation: 8,
   },
   logo: {
-    width: 140,
-    height: 140,
-    marginBottom: 10,
-    alignSelf: 'center',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
   },
   title: {
     fontSize: 28,
-    fontWeight: '700',
-    color: '#007AFF',
-    marginBottom: 8,
+    fontWeight: '900',
+    color: '#000',
     textAlign: 'center',
+    marginBottom: 10,
   },
   subtitle: {
     fontSize: 16,
@@ -153,8 +187,8 @@ const styles = StyleSheet.create({
   },
   fab: {
     position: 'absolute',
-    bottom: 30,
-    right: 30,
+    bottom: 20,
+    right: 20,
     backgroundColor: '#007AFF',
     width: 50,
     height: 50,
